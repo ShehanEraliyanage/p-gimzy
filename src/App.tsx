@@ -61,22 +61,24 @@ function App() {
         duration: number;
         emoji: string;
       }>;
-    return Array.from({ length: 36 }, (_, id) => ({
+    return Array.from({ length: 48 }, (_, id) => ({
       id,
       left: Math.random() * 100,
       delay: Math.random() * 1.8,
-      size: 16 + Math.random() * 20,
+      size: 20 + Math.random() * 24,
       duration: 5 + Math.random() * 3.5,
       emoji: yesEmojis[Math.floor(Math.random() * yesEmojis.length)]
     }));
   }, [accepted]);
 
+  const noEmojis = ["😢", "😭", "🥺"];
   const handleNo = () => {
-    const hearts = Array.from({ length: 8 }, (_, idx) => ({
+    const hearts = Array.from({ length: 14 }, (_, idx) => ({
       id: Date.now() + idx,
       x: 10 + Math.random() * 80,
       drift: -20 + Math.random() * 40,
-      delay: Math.random() * 0.25
+      delay: Math.random() * 0.25,
+      emoji: noEmojis[Math.floor(Math.random() * noEmojis.length)]
     }));
     setNoBursts((prev) => [...prev, ...hearts].slice(-40));
     setStep((v) => v + 1);
@@ -199,7 +201,7 @@ function App() {
                 transition={{ duration: 1.4, delay: heart.delay, ease: "easeOut" }}
                 style={{ left: `${heart.x}%` }}
               >
-                ❤️
+                {heart.emoji}
               </motion.span>
             ))}
           </AnimatePresence>
