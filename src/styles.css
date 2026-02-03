@@ -252,14 +252,16 @@ header {
   inset: 0;
   pointer-events: none;
   overflow: hidden;
-  z-index: 0;
+  z-index: 1;
 }
 
 .yes-heart {
   position: absolute;
   bottom: -12%;
-  opacity: 0.8;
-  filter: drop-shadow(0 10px 24px rgba(244, 63, 94, 0.4));
+  opacity: 0.95;
+  filter: drop-shadow(0 10px 24px rgba(244, 63, 94, 0.6));
+  text-shadow: 0 6px 18px rgba(255, 255, 255, 0.25);
+  mix-blend-mode: screen;
   animation-name: float-up;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;

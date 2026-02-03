@@ -61,12 +61,12 @@ function App() {
         duration: number;
         emoji: string;
       }>;
-    return Array.from({ length: 22 }, (_, id) => ({
+    return Array.from({ length: 36 }, (_, id) => ({
       id,
       left: Math.random() * 100,
-      delay: Math.random() * 1.2,
+      delay: Math.random() * 1.8,
       size: 16 + Math.random() * 20,
-      duration: 3 + Math.random() * 2.8,
+      duration: 5 + Math.random() * 3.5,
       emoji: yesEmojis[Math.floor(Math.random() * yesEmojis.length)]
     }));
   }, [accepted]);
