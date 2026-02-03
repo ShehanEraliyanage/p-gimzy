@@ -1,13 +1,23 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useMemo, useState } from "react";
 import placeholder from "./assets/couple-placeholder.svg";
+import HeartsBackground from "./HeartsBackground";
 
 const prompts = [
   "Will you marry me?",
   "Are you sure you want to press no?",
   "Think again, Gimzy!",
+  "Your forever starts right here.",
   "Last chance before the universe votes yes.",
   "Fine, but yes still wins."
+];
+
+const loveNotes = [
+  "Every heartbeat says your name.",
+  "You are my favorite forever.",
+  "Let’s write the sweetest story together.",
+  "Home is wherever your hand is in mine.",
+  "One day, every day, always you."
 ];
 
 const HERO_DEFAULT = "/couple.jpg"; // place your photo at public/couple.jpg
@@ -20,6 +30,7 @@ function App() {
   const [noBursts, setNoBursts] = useState<Array<{ id: number; x: number; drift: number; delay: number }>>([]);
 
   const question = prompts[step % prompts.length];
+  const loveNote = loveNotes[step % loveNotes.length];
   const mischievousShift = useMemo(() => {
     const x = Math.sin(wiggle * 1.6) * 34;
     const y = Math.cos(wiggle * 1.3) * 18;
@@ -32,6 +43,17 @@ function App() {
       id,
       left: Math.random() * 100,
       delay: Math.random() * 0.35
+    }));
+  }, [accepted]);
+
+  const yesHearts = useMemo(() => {
+    if (!accepted) return [] as Array<{ id: number; left: number; delay: number; size: number; duration: number }>;
+    return Array.from({ length: 18 }, (_, id) => ({
+      id,
+      left: Math.random() * 100,
+      delay: Math.random() * 1.2,
+      size: 16 + Math.random() * 18,
+      duration: 3 + Math.random() * 2.5
     }));
   }, [accepted]);
 
@@ -57,7 +79,9 @@ function App() {
 
   return (
     <div className="app-shell">
+      <HeartsBackground intensity="high" />
       <div className="floating-hearts" aria-hidden />
+      <div className="romance-glow" aria-hidden />
       <header>
         <div className="brand-mark">G</div>
         <div className="title">
@@ -72,10 +96,16 @@ function App() {
 
       <div className="controls">
         {accepted ? (
-          <div className="yes-burst">
+          <motion.div
+            className="yes-burst"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
             <h2 className="pulse">Yes</h2>
             <p>Lock it in: forever date unlocked. 💍</p>
-          </div>
+            <p className="love-vow">I can’t wait to spend forever with you.</p>
+          </motion.div>
         ) : (
           <>
             <div className="caption">{question}</div>
@@ -96,6 +126,11 @@ function App() {
         )}
       </div>
 
+      <div className="love-note">
+        <span className="love-note__label">Little love note</span>
+        <p>{accepted ? "Forever starts now. Hold my hand and never let go." : loveNote}</p>
+      </div>
+
       {!accepted && (
         <div className="no-heart-layer" aria-hidden>
           <AnimatePresence>
@@ -113,6 +148,25 @@ function App() {
               </motion.span>
             ))}
           </AnimatePresence>
+        </div>
+      )}
+
+      {accepted && (
+        <div className="yes-hearts" aria-hidden>
+          {yesHearts.map((heart) => (
+            <span
+              key={heart.id}
+              className="yes-heart"
+              style={{
+                left: `${heart.left}%`,
+                fontSize: `${heart.size}px`,
+                animationDelay: `${heart.delay}s`,
+                animationDuration: `${heart.duration}s`
+              }}
+            >
+              💗
+            </span>
+          ))}
         </div>
       )}
 
