@@ -1,0 +1,322 @@
+:root {
+  --bg-1: #0f172a;
+  --bg-2: #111827;
+  --accent: #f43f5e;
+  --accent-2: #fb7185;
+  --muted: #cbd5e1;
+  --text: #e2e8f0;
+  --glass: rgba(255, 255, 255, 0.08);
+  --glow: 0 20px 80px rgba(244, 63, 94, 0.25);
+  --shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at 20% 20%, rgba(244, 63, 94, 0.16), transparent 30%),
+    radial-gradient(circle at 80% 10%, rgba(79, 70, 229, 0.16), transparent 26%),
+    linear-gradient(135deg, var(--bg-1), var(--bg-2));
+  color: var(--text);
+  font-family: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+#root {
+  width: 100%;
+}
+
+.app-shell {
+  max-width: 460px;
+  margin: 0 auto;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 28px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+}
+
+.app-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 30%, rgba(244, 63, 94, 0.12), transparent 30%),
+    radial-gradient(circle at 80% 20%, rgba(79, 70, 229, 0.12), transparent 26%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.brand-mark {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  display: grid;
+  place-items: center;
+  color: #0f172a;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  box-shadow: 0 12px 30px rgba(244, 63, 94, 0.3);
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.title small {
+  color: var(--muted);
+  letter-spacing: 0.4px;
+  font-size: 12px;
+}
+
+.title span {
+  font-size: 24px;
+  font-weight: 700;
+  font-family: "Playfair Display", "Manrope", serif;
+}
+
+.card {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.card img {
+  width: 100%;
+  display: block;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  background: #0f172a;
+}
+
+.caption {
+  text-align: center;
+  padding: 14px 12px;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.controls {
+  margin-top: 8px;
+  display: grid;
+  gap: 10px;
+  z-index: 1;
+}
+
+.button-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.btn {
+  border: none;
+  border-radius: 14px;
+  padding: 14px 16px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  color: #0b1020;
+}
+
+.btn:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  box-shadow: 0 10px 30px rgba(244, 63, 94, 0.35);
+  color: #0f172a;
+}
+
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.btn-pill {
+  border-radius: 999px;
+}
+
+.progress-note {
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+  letter-spacing: 0.3px;
+}
+
+.pulse {
+  animation: pulse 2.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+.floating-hearts {
+  position: absolute;
+  inset: -10% 0 0 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(18px 14px at 50% 40%, rgba(244, 63, 94, 0.4), transparent 60%),
+    radial-gradient(14px 10px at 30% 70%, rgba(251, 113, 133, 0.35), transparent 60%),
+    radial-gradient(12px 9px at 80% 60%, rgba(244, 63, 94, 0.28), transparent 60%),
+    radial-gradient(10px 8px at 60% 30%, rgba(251, 113, 133, 0.24), transparent 60%);
+  background-repeat: repeat;
+  background-size: 260px 260px;
+  opacity: 0.7;
+  animation: float 24s linear infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-120px);
+  }
+}
+
+.confetti {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.no-heart-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.no-heart {
+  position: absolute;
+  bottom: 18%;
+  font-size: 18px;
+  filter: drop-shadow(0 6px 14px rgba(244, 63, 94, 0.4));
+}
+
+.confetti span {
+  position: absolute;
+  width: 10px;
+  height: 14px;
+  background: linear-gradient(135deg, #f43f5e, #fb7185);
+  opacity: 0.9;
+  border-radius: 4px;
+  animation: fall 2.6s ease-in forwards;
+}
+
+@keyframes fall {
+  0% {
+    transform: translate3d(0, -120%, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate3d(40px, 120vh, 0) rotate(320deg);
+    opacity: 0;
+  }
+}
+
+.yes-burst {
+  display: grid;
+  place-items: center;
+  padding: 18px 10px 4px;
+  text-align: center;
+}
+
+.yes-burst h2 {
+  margin: 0;
+  font-size: clamp(42px, 10vw, 64px);
+  font-family: "Playfair Display", "Manrope", serif;
+  color: #fff;
+  text-shadow: 0 12px 50px rgba(0, 0, 0, 0.45);
+}
+
+.yes-burst p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  letter-spacing: 0.4px;
+}
+
+.micro-actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.micro-actions button {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.micro-actions button:hover {
+  background: rgba(255, 255, 255, 0.16);
+  transform: translateY(-1px);
+}
+
+.sneaky {
+  position: relative;
+}
+
+@media (max-width: 520px) {
+  .app-shell {
+    padding: 14px;
+  }
+
+  .card {
+    border-radius: 18px;
+  }
+
+  .btn {
+    padding: 12px 14px;
+    font-size: 15px;
+  }
+
+  .button-row {
+    gap: 8px;
+  }
+}
