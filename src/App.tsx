@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { gsap } from "gsap";
 import placeholder from "./assets/couple-placeholder.svg";
 import HeartsBackground from "./HeartsBackground";
 
@@ -28,6 +29,9 @@ function App() {
   const [wiggle, setWiggle] = useState(0);
   const [heroSrc, setHeroSrc] = useState<string>(HERO_DEFAULT);
   const [noBursts, setNoBursts] = useState<Array<{ id: number; x: number; drift: number; delay: number }>>([]);
+  const cardRef = useRef<HTMLDivElement | null>(null);
+  const loveNoteRef = useRef<HTMLDivElement | null>(null);
+  const yesBurstRef = useRef<HTMLDivElement | null>(null);
 
   const question = prompts[step % prompts.length];
   const loveNote = loveNotes[step % loveNotes.length];
@@ -77,20 +81,60 @@ function App() {
     setHeroSrc(placeholder);
   };
 
+  useEffect(() => {
+    if (!cardRef.current || !loveNoteRef.current) return;
+    const ctx = gsap.context(() => {
+      gsap.to(cardRef.current, {
+        y: -6,
+        duration: 4.5,
+        yoyo: true,
+        repeat: -1,
+        ease: "sine.inOut"
+      });
+      gsap.to(loveNoteRef.current, {
+        y: 6,
+        duration: 5.5,
+        yoyo: true,
+        repeat: -1,
+        ease: "sine.inOut"
+      });
+    });
+    return () => ctx.revert();
+  }, []);
+
+  useEffect(() => {
+    if (!accepted || !yesBurstRef.current) return;
+    const tl = gsap.timeline();
+    tl.fromTo(
+      yesBurstRef.current,
+      { scale: 0.98, boxShadow: "0 0 0 rgba(244, 63, 94, 0)" },
+      {
+        scale: 1.02,
+        boxShadow: "0 18px 70px rgba(244, 63, 94, 0.35)",
+        duration: 1.2,
+        yoyo: true,
+        repeat: 1,
+        ease: "power2.inOut"
+      }
+    );
+  }, [accepted]);
+
   return (
     <div className="app-shell">
       <HeartsBackground intensity="high" />
       <div className="floating-hearts" aria-hidden />
       <div className="romance-glow" aria-hidden />
       <header>
-        <div className="brand-mark">G</div>
+        <div className="brand-mark brand-heart" aria-hidden>
+          ❤️
+        </div>
         <div className="title">
           <small>For my once-in-a-lifetime love, Gimzy ❤️</small>
           <span>Gimzy Proposal</span>
         </div>
       </header>
 
-      <div className="card">
+      <div className="card" ref={cardRef}>
         <img src={heroSrc} alt="Us, looking adorable" onError={handleImageError} />
       </div>
 
@@ -98,13 +142,14 @@ function App() {
         {accepted ? (
           <motion.div
             className="yes-burst"
+            ref={yesBurstRef}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <h2 className="pulse">Yes</h2>
             <p>Lock it in: forever date unlocked. 💍</p>
-            <p className="love-vow">I can’t wait to spend forever with you.</p>
+            <p className="love-vow flicker">I can’t wait to spend forever with you.</p>
           </motion.div>
         ) : (
           <>
@@ -126,7 +171,7 @@ function App() {
         )}
       </div>
 
-      <div className="love-note">
+      <div className="love-note" ref={loveNoteRef}>
         <span className="love-note__label">Little love note</span>
         <p>{accepted ? "Forever starts now. Hold my hand and never let go." : loveNote}</p>
       </div>
