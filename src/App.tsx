@@ -21,7 +21,7 @@ const loveNotes = [
   "One day, every day, always you."
 ];
 
-const HERO_DEFAULT = "/couple.jpg"; // place your photo at public/couple.jpg
+const HERO_DEFAULT = `${import.meta.env.BASE_URL}couple.jpg`; // place your photo at public/couple.jpg
 
 function App() {
   const [step, setStep] = useState(0);
@@ -50,14 +50,24 @@ function App() {
     }));
   }, [accepted]);
 
+  const yesEmojis = ["💗", "💖", "💘", "💞", "💕", "😘", "💋", "😍"];
   const yesHearts = useMemo(() => {
-    if (!accepted) return [] as Array<{ id: number; left: number; delay: number; size: number; duration: number }>;
-    return Array.from({ length: 18 }, (_, id) => ({
+    if (!accepted)
+      return [] as Array<{
+        id: number;
+        left: number;
+        delay: number;
+        size: number;
+        duration: number;
+        emoji: string;
+      }>;
+    return Array.from({ length: 22 }, (_, id) => ({
       id,
       left: Math.random() * 100,
       delay: Math.random() * 1.2,
-      size: 16 + Math.random() * 18,
-      duration: 3 + Math.random() * 2.5
+      size: 16 + Math.random() * 20,
+      duration: 3 + Math.random() * 2.8,
+      emoji: yesEmojis[Math.floor(Math.random() * yesEmojis.length)]
     }));
   }, [accepted]);
 
@@ -209,7 +219,7 @@ function App() {
                 animationDuration: `${heart.duration}s`
               }}
             >
-              💗
+              {heart.emoji}
             </span>
           ))}
         </div>
