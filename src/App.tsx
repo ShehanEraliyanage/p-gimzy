@@ -28,7 +28,9 @@ function App() {
   const [accepted, setAccepted] = useState(false);
   const [wiggle, setWiggle] = useState(0);
   const [heroSrc, setHeroSrc] = useState<string>(HERO_DEFAULT);
-  const [noBursts, setNoBursts] = useState<Array<{ id: number; x: number; drift: number; delay: number }>>([]);
+  const [noBursts, setNoBursts] = useState<
+    Array<{ id: number; x: number; drift: number; delay: number; emoji: string }>
+  >([]);
   const cardRef = useRef<HTMLDivElement | null>(null);
   const loveNoteRef = useRef<HTMLDivElement | null>(null);
   const yesBurstRef = useRef<HTMLDivElement | null>(null);
